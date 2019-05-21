@@ -56,8 +56,7 @@ type BitcoinPrice struct {
 	DisplaySymbol    string  `json:"display_symbol"`
 }
 
-func main() {
-	r := gin.Default()
+func Bitcoin(c *gin.Context) {
 	respone, err := http.Get("https://apiv2.bitcoinaverage.com/indices/global/ticker/BTCUSD")
 	if err != nil {
 		fmt.Println("Error:", err)
@@ -65,13 +64,15 @@ func main() {
 		data, _ := ioutil.ReadAll(respone.Body)
 		var bp BitcoinPrice
 		json.Unmarshal([]byte(data), &bp)
+		c.JSON(200, gin.H{
+			"price": bp.Last,
+		})
 		fmt.Println(bp.Last)
 	}
+}
 
-	r.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "pong",
-		})
-	})
+func main() {
+	r := gin.Default()
+	r.GET("/bitcoin", Bitcoin)
 	r.Run()
 }
