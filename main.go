@@ -2,31 +2,39 @@ package main
 
 import (
 	"fmt"
+	"time"
 
-	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+
+	"github.com/gin-gonic/gin"
 )
+
+var db *gorm.DB
+var err error
 
 type BitcoinPrice struct {
 	gorm.Model
 	Price string
-	// Date  *time.Time
+	Date  time.Time
 }
 
-func Bitcoin(c *gin.Context) {
-	db, err := gorm.Open("postgres", "host=localhost dbname=app_db")
+func main() {
+	db, err := gorm.Open("postgres", "host=localhost port=5432 user=postgres password=password dbname=app_db sslmode=disable")
 	if err != nil {
 		panic("failed to connect the DB")
 	}
 	defer db.Close()
-	var price BitcoinPrice
-	data := db.First(price)
-	fmt.Printf("%s", data)
+	r := gin.Default()
+	r.Run()
 }
 
-func main() {
-	r := gin.Default()
-	r.GET("/bitcoin", Bitcoin)
-	r.Run()
+func GetBitcoinPrice(c *gin.Context) {
+	var price BitcoinPrice
+	if err := db.Find(price).Error; err != nil {
+		c.AbortWithStatus(404)
+		fmt.Println(err)
+	} else {
+		c.JSON(200, price)
+	}
 }
