@@ -15,8 +15,9 @@ var err error
 
 type BitcoinPrice struct {
 	gorm.Model
-	Price string
-	Date  time.Time
+	ID      int       `json: "id"`
+	Price   string    `json: "price"`
+	Created time.Time `json: "created"`
 }
 
 func main() {
@@ -26,6 +27,7 @@ func main() {
 	}
 	defer db.Close()
 	r := gin.Default()
+	r.GET("/bitcoin", GetBitcoinPrice)
 	r.Run()
 }
 
