@@ -18,9 +18,9 @@ func fetchBitcoinPrice() {
 }
 
 func main() {
-	db, err := gorm.Open("postgres", "host=localhost user=postgres port=5432 dbname=tool_db")
+	db, err := gorm.Open("postgres", "host=localhost user=postgres port=5432 dbname=tool_db password=password sslmode=disable")
 	if err != nil {
-		fmt.Printf("failed")
+		fmt.Printf(err.Error())
 	}
 	defer db.Close()
 	fetchBitcoinPrice()
