@@ -3,15 +3,27 @@ package main
 import (
 	"fmt"
 	"net/http"
-
-	"github.com/labstack/echo"
+	"time"
 
 	"github.com/gocolly/colly"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/labstack/echo"
+	"github.com/shopspring/decimal"
 )
 
+var db *gorm.DB
+var err error
+
+type CryptoPrice struct {
+	ID      uint
+	Name    string
+	Price   decimal.Decimal
+	Created time.Time
+}
+
 func showCryptoPrice(c echo.Context) error {
+	fetchBitcoinPrice()
 	return c.String(http.StatusOK, "Crypto Page")
 }
 
@@ -22,6 +34,8 @@ func fetchBitcoinPrice() {
 		fmt.Println(price)
 	})
 	c.Visit("https://coinmarketcap.com/all/views/all/")
+	var bitcoin = CryptoPrice{Name: "Bitcoin", Price: decimal.NewFromFloat(1000.00), Created: time.Now()}
+	db.Create(&bitcoin)
 }
 
 func main() {
@@ -36,7 +50,7 @@ func main() {
 		return c.String(http.StatusOK, "Hello World")
 	})
 	e.GET("/crypto", showCryptoPrice)
-	// db.Close()
+
 	e.Start(":8001")
 	db.Close()
 }
