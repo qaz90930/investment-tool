@@ -5,3 +5,5 @@ CREATE TABLE fund (
   price NUMERIC (8, 2),
   created TIMESTAMP
 );
+COMMIT;
+SELECT version();
