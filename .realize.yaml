@@ -28,4 +28,5 @@ schema:
     - .git
     - .realize
     - vendor
-    run: true
+    run: 
+      status: true
