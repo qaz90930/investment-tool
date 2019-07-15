@@ -1,0 +1,31 @@
+settings:
+  legacy:
+    force: false
+    interval: 0s
+server:
+  status: true
+  open: true
+  host: localhost
+  port: 5001
+schema:
+- name: investment-tool
+  path: /Users/hank/go/src/github.com/hank/investment-tool
+  env:
+    development=development
+  commands:
+    fmt:
+      status: true
+    install:
+      status: true
+    run:
+      status: true
+  watcher:
+    extensions:
+    - go
+    paths:
+    - /
+    ignored_paths:
+    - .git
+    - .realize
+    - vendor
+    run: true
