@@ -1,2 +1,4 @@
+BEGIN;
 CREATE SCHEMA schemas;
 COMMIT;
+SELECT version();
