@@ -1,4 +1,4 @@
-package route
+package app
 
 import (
 	"database/sql"
@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/carlescere/scheduler"
 
 	"github.com/gocolly/colly"
 	"github.com/labstack/echo"
@@ -20,7 +22,7 @@ type CryptoPrice struct {
 }
 
 func showCryptoPrice(c echo.Context) error {
-	fetchBitcoinPrice()
+	scheduler.Every(5).Seconds().Run(fetchBitcoinPrice)
 	return c.String(http.StatusOK, "Crypto Page")
 }
 
@@ -32,7 +34,6 @@ func fetchBitcoinPrice() {
 		fmt.Println(price)
 		connStr := "postgres://hank:password@localhost:5432/tool_db?sslmode=disable"
 		db, err := sql.Open("postgres", connStr)
-		fmt.Printf("Successfully Connected")
 		db.QueryRow(`INSERT INTO fund (fund_name, price, created) VALUES ($1, $2, $3)`, "bitcoin", price, time.Now())
 		if err != nil {
 			fmt.Println(err)
@@ -42,7 +43,7 @@ func fetchBitcoinPrice() {
 	c.Visit("https://coinmarketcap.com/all/views/all/")
 }
 
-func Route() {
+func Index() {
 	e := echo.New()
 	e.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "Hello World")
