@@ -7,15 +7,16 @@ import (
 	"strings"
 	"time"
 
+	"github.com/carlescere/scheduler"
 	"github.com/gocolly/colly"
 	"github.com/labstack/echo"
 )
 
 func showCryptoPrice(c echo.Context) error {
-	// scheduler.Every(5).Seconds().Run(fetchBitcoinPrice)
+	scheduler.Every(5).Seconds().Run(fetchBitcoinPrice)
 	// scheduler.Every(5).Seconds().Run(fetchStockInfo)
 	fetchStockInfo()
-	return c.String(http.StatusOK, "Crypto Page")
+	return c.String(http.StatusOK, "Price list")
 }
 
 func fetchBitcoinPrice() {
