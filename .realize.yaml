@@ -4,7 +4,6 @@ settings:
     interval: 0s
 server:
   status: true
-  open: true
   host: localhost
   port: 5001
 schema:

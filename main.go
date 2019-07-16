@@ -1,10 +1,10 @@
 package main
 
 import (
-	"github.com/hank/investment-tool/app"
+	fetchprice "github.com/hank/investment-tool/internal/app"
 	_ "github.com/lib/pq"
 )
 
 func main() {
-	app.Index()
+	fetchprice.Index()
 }

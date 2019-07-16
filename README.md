@@ -10,9 +10,12 @@
 Database Configration
 
 ```UNIX
-$ sudo -u postgres createuser user_name // Create a user for the database
-$ sudo -u postgres createdb tool_db -o user_name // Create a DB for the app
-$ sudo -u postgres psql tool_db // Go to the DB
+// Create a user for the database
+$ sudo -u postgres createuser user_name
+// Create a DB for the app
+$ sudo -u postgres createdb tool_db -o user_name
+// Go to the DB
+$ sudo -u postgres psql tool_db
 ```
 
 Install golang-migrate

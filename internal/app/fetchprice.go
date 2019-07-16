@@ -1,4 +1,4 @@
-package app
+package fetchprice
 
 import (
 	"database/sql"
@@ -21,7 +21,6 @@ func landingPage(c echo.Context) error {
 
 func showCryptoPrice(c echo.Context) error {
 	scheduler.Every(1).Minutes().Run(fetchBitcoinPrice)
-	// scheduler.Every(5).Seconds().Run(fetchStockInfo)
 	scheduler.Every(1).Minutes().Run(fetchStockInfo)
 	return c.String(http.StatusOK, "Price list")
 }
