@@ -1,7 +1,7 @@
 package main
 
 import (
-	fetch "github.com/hank/investment-tool/internal/app"
+	fetch "github.com/hank/investment/internal/app"
 	_ "github.com/lib/pq"
 )
 

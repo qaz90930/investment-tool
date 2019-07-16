@@ -8,7 +8,7 @@ server:
   port: 5001
 schema:
 - name: investment-tool
-  path: /Users/hank/go/src/github.com/hank/investment-tool
+  path: /Users/hank/go/src/github.com/hank/investment
   env:
     development=development
   commands:
