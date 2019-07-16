@@ -18,7 +18,7 @@ type Fund struct {
 
 var connStr = "postgres://hank:password@localhost:5432/tool_db?sslmode=disable"
 
-func getPrice(c echo.Context) error {
+func Price(c echo.Context) error {
 	db, err := sql.Open("postgres", connStr)
 	rows := db.QueryRow(`SELECT fund_name, price, created FROM fund ORDER BY fund_name`)
 	if err != nil {

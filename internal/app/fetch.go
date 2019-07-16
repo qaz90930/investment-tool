@@ -1,4 +1,4 @@
-package fetchprice
+package fetch
 
 import (
 	"database/sql"
@@ -10,6 +10,7 @@ import (
 
 	"github.com/carlescere/scheduler"
 	"github.com/gocolly/colly"
+	fund "github.com/hank/investment-tool/api"
 	"github.com/labstack/echo"
 )
 
@@ -62,5 +63,6 @@ func Index() {
 	e := echo.New()
 	e.GET("/", landingPage)
 	e.GET("/price-list", showCryptoPrice)
+	e.GET("/fund/:name", fund.Price)
 	e.Start(":8001")
 }
