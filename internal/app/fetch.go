@@ -23,7 +23,7 @@ func landingPage(c echo.Context) error {
 func showCryptoPrice(c echo.Context) error {
 	scheduler.Every(1).Minutes().Run(fetchBitcoinPrice)
 	scheduler.Every(1).Minutes().Run(fetchStockInfo)
-	return c.String(http.StatusOK, "Price list")
+	return c.String(http.StatusOK, "Fetch")
 }
 
 func fetchBitcoinPrice() {
@@ -62,7 +62,7 @@ func Index() {
 	// This function contains all the routes
 	e := echo.New()
 	e.GET("/", landingPage)
-	e.GET("/price-list", showCryptoPrice)
+	e.GET("/fetch", showCryptoPrice)
 	e.GET("/fund", fund.Price)
 	e.Start(":8001")
 }
